@@ -1,33 +1,82 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="si">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Shop</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LankaExpress - ඔබගේ අන්තර්ජාල සාප්පුව</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-<h1>My Shop</h1>
-</header>
-<main>
-<div class="products">
-  <div class="product">
-    <img src="images/product1.jpg" alt="Product 1">
-    <h2>Product 1</h2>
-    <p>Price: $20</p>
-    <a href="https://wa.me/94741039941?text=Hi%2C%20I%20want%20to%20buy%20Product%201" target="_blank" class="buy-btn">Buy via WhatsApp</a>
-  </div>
-  <div class="product">
-    <img src="images/product2.jpg" alt="Product 2">
-    <h2>Product 2</h2>
-    <p>Price: $15</p>
-    <a href="https://wa.me/94741039941?text=Hi%2C%20I%20want%20to%20buy%20Product%202" target="_blank" class="buy-btn">Buy via WhatsApp</a>
-  </div>
-</div>
-</main>
-<footer>
-<p>Contact: 0741039941 (WhatsApp)</p>
-</footer>
-<script src="script.js"></script>
+    <!-- ශීර්ෂකය -->
+    <header>
+        <div class="logo-search">
+            <h1 class="logo">LankaExpress</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="භාණ්ණ සොයන්න...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-cart">
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">මුල් පිටුව</a></li>
+                <li><a href="#">භාණ්ඩ</a></li>
+                <li><a href="#">ප්‍රවර්ග</a></li>
+                <li><a href="#">ප්‍රශංසා</a></li>
+                <li><a href="#">අපි ගැන</a></li>
+                <li><a href="#">අමතන්න</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ප්‍රධාන අන්තර්ගතය -->
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>පහසුම මිලට ගුණාත්මක භාණ්ඩ</h2>
+                <p>ලංකාව පුරා නිව්නා ගෙවීම සහ භාණ්ඩ භාරදීම</p>
+                <a href="#" class="btn">දැන් මිලදී ගන්න</a>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <h2>විශේෂ භාණ්ඩ</h2>
+            <div class="products-container" id="products-container">
+                <!-- JavaScript මගින් භාණ්ඩ පූරණය කරනු ලැබේ -->
+            </div>
+        </section>
+    </main>
+
+    <!-- පාදකය -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>LankaExpress</h3>
+                <p>ඔබගේ විශ්වාසනීය අන්තර්ජාල සාප්පුව</p>
+            </div>
+            <div class="footer-section">
+                <h3>සබැඳි</h3>
+                <ul>
+                    <li><a href="#">මුල් පිටුව</a></li>
+                    <li><a href="#">භාණ්ඩ</a></li>
+                    <li><a href="#">ප්‍රවර්ග</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>අමතන්න</h3>
+                <p><i class="fas fa-phone"></i> 0741039941</p>
+                <p><i class="fas fa-envelope"></i> info@lankaexpress.lk</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LankaExpress. සියලුම හිමිකම් ඇවිරිණි.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
