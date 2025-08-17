@@ -1,3 +1,6 @@
+// EmailJS ආරම්භක කිරීම
+emailjs.init('YOUR_EMAILJS_USER_ID');
+
 // භාණ්ඩ දත්ත
 const products = [
     {
@@ -20,32 +23,12 @@ const products = [
         price: 12000,
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1399&q=80",
         rating: 4.7
-    },
-    {
-        id: 4,
-        name: "ලැප්ටොප් බෑග්",
-        price: 3500,
-        image: "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
-        rating: 3.9
-    },
-    {
-        id: 5,
-        name: "බ්ලූටූත් ස්පීකර්",
-        price: 6000,
-        image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1377&q=80",
-        rating: 4.3
-    },
-    {
-        id: 6,
-        name: "පවර් බැංකුව",
-        price: 8000,
-        image: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80",
-        rating: 4.0
     }
 ];
 
 // කරත්තය
 let cart = [];
+let currentProduct = null;
 
 // DOM පූරණය වූ විට
 document.addEventListener('DOMContentLoaded', () => {
@@ -53,10 +36,24 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
     
     // සෙවුම් බොත්තම් සිදුවීම
-    document.querySelector('.search-bar button').addEventListener('click', searchProducts);
-    document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
+    document.getElementById('searchBtn').addEventListener('click', searchProducts);
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             searchProducts();
+        }
+    });
+    
+    // මොඩල් වසන්න බොත්තම
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    
+    // ඇණවුම් පෝරමය ඉදිරිපත් කිරීම
+    document.getElementById('orderForm').addEventListener('submit', submitOrderForm);
+    
+    // මොඩල් පිටුවෙන් පිටත ක්ලික් කළ විට වසන්න
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('orderModal');
+        if (event.target === modal) {
+            closeModal();
         }
     });
 });
@@ -80,11 +77,21 @@ function displayProducts(filteredProducts = products) {
                 <div class="product-rating">
                     ${generateRatingStars(product.rating)}
                 </div>
+                <button class="buy-now-btn" data-id="${product.id}">Buy Now</button>
                 <button class="add-to-cart" data-id="${product.id}">කරත්තයට එකතු කරන්න</button>
             </div>
         `;
         
         productsContainer.appendChild(productCard);
+    });
+    
+    // Buy Now බොත්තම් සිදුවීම්
+    document.querySelectorAll('.buy-now-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = parseInt(this.getAttribute('data-id'));
+            currentProduct = products.find(p => p.id === productId);
+            openModal(currentProduct);
+        });
     });
     
     // කරත්ත බොත්තම් සිදුවීම්
@@ -125,14 +132,7 @@ function addToCart(e) {
     updateCartCount();
     
     // තාවකාලික ඇලර්ට් පණිවිඩය
-    const alertMsg = document.createElement('div');
-    alertMsg.className = 'alert-message';
-    alertMsg.textContent = `${product.name} කරත්තයට එකතු කරන ලදී!`;
-    document.body.appendChild(alertMsg);
-    
-    setTimeout(() => {
-        alertMsg.remove();
-    }, 2000);
+    showAlert(`${product.name} කරත්තයට එකතු කරන ලදී!`);
 }
 
 // කරත්ත ගණන යාවත්කාලීන කරන්න
@@ -142,7 +142,7 @@ function updateCartCount() {
 
 // භාණ්ඩ සොයන්න
 function searchProducts() {
-    const searchTerm = document.querySelector('.search-bar input').value.toLowerCase();
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     
     if (searchTerm.trim() === '') {
         displayProducts();
@@ -156,77 +156,57 @@ function searchProducts() {
     displayProducts(filteredProducts);
 }
 
-// WhatsApp සමඟ සම්බන්ධ වීම
-function connectViaWhatsApp(productName) {
-    const phoneNumber = "94741039941";
-    const message = `ආයුබෝවන්, මම ${productName} මිලදී ගැනීමට අවශ්‍යයි.`;
-    const whatsappUrl = `https://wa.me/${+94741039941}?text=${encodeURIComponent(message)}`;
+// මොඩල් විවෘත කරන්න
+function openModal(product) {
+    document.getElementById('orderedProduct').value = product.name;
+    document.getElementById('orderedPrice').value = `රු.${product.price.toLocaleString()}`;
+    document.getElementById('orderModal').style.display = 'block';
+}
+
+// මොඩල් වසන්න
+function closeModal() {
+    document.getElementById('orderModal').style.display = 'none';
+    document.getElementById('orderForm').reset();
+}
+
+// ඇණවුම් පෝරමය ඉදිරිපත් කිරීම
+function submitOrderForm(e) {
+    e.preventDefault();
     
-    window.open(whatsappUrl, '_blank');
-  }
-document.addEventListener('DOMContentLoaded', function() {
-    // EmailJS ආරම්භක කිරීම (ඔබගේ User ID සමඟ)
-    emailjs.init('service_xldh81s');
+    // පෝරම දත්ත ලබා ගැනීම
+    const formData = {
+        name: document.getElementById('customerName').value.trim(),
+        address: document.getElementById('customerAddress').value.trim(),
+        phone: document.getElementById('customerPhone').value.trim(),
+        email: document.getElementById('customerEmail').value.trim(),
+        product: document.getElementById('orderedProduct').value,
+        price: document.getElementById('orderedPrice').value,
+        timestamp: new Date().toLocaleString('si-LK')
+    };
     
-    const buyNowBtn = document.getElementById('buyNowBtn');
-    const orderForm = document.getElementById('orderForm');
-    const orderFormData = document.getElementById('orderFormData');
-    const successMessage = document.getElementById('successMessage');
-    
-    // Buy Now බොත්තම ක්ලික් කළ විට
-    buyNowBtn.addEventListener('click', function() {
-        orderForm.style.display = 'block';
-        window.scrollTo({
-            top: orderForm.offsetTop - 50,
-            behavior: 'smooth'
-        });
-    });
-    
-    // පෝරමය ඉදිරිපත් කළ විට
-    orderFormData.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // පෝරම දත්ත ලබා ගැනීම
-        const formData = {
-            name: document.getElementById('name').value.trim(),
-            address: document.getElementById('address').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            notes: document.getElementById('notes').value.trim(),
-            product: document.getElementById('product').value,
-            price: document.getElementById('price').value,
-            timestamp: new Date().toLocaleString('si-LK')
-        };
-        
-        // දත්ත වලංගු කිරීම
-        if (!formData.name || !formData.address || !formData.phone) {
-            alert("කරුණාකර අනිවාර්ය ක්ෂේත්‍ර පුරවන්න!");
-            return;
-        }
-        
-        // WhatsApp පණිවිඩය යැවීම
-        sendWhatsAppMessage(formData);
-        
-        // ඊමේල් යැවීම
-        sendEmail(formData);
-        
-        // සාර්ථක පණිවිඩය පෙන්වන්න
-        orderFormData.style.display = 'none';
-        successMessage.style.display = 'block';
-        
-        // පෝරමය යළි පිහිටුවීම
-        setTimeout(() => {
-            orderFormData.reset();
-            orderForm.style.display = 'none';
-            successMessage.style.display = 'none';
-            orderFormData.style.display = 'block';
-        }, 3000);
-    });
+    // දත්ත වලංගු කිරීම
+    if (!formData.name || !formData.address || !formData.phone) {
+        showAlert("කරුණාකර අනිවාර්ය ක්ෂේත්‍ර පුරවන්න!");
+        return;
+    }
     
     // WhatsApp පණිවිඩය යැවීම
-    function sendWhatsAppMessage(formData) {
-        const phoneNumber = "94741039941"; // ඔබගේ WhatsApp අංකය
-        const message = `නව ඇණවුම!
+    sendWhatsAppMessage(formData);
+    
+    // ඊමේල් යැවීම
+    sendEmail(formData);
+    
+    // පෝරමය යළි පිහිටුවීම සහ මොඩල් වසන්න
+    closeModal();
+    
+    // සාර්ථක පණිවිඩය පෙන්වන්න
+    showAlert("ඇණවුම සාර්ථකව ලබාගෙන ඇත! ඔබගේ WhatsApp අංකයට තහවුරු කිරීම් පණිවිඩයක් යවනු ලැබේ.");
+}
+
+// WhatsApp පණිවිඩය යැවීම
+function sendWhatsAppMessage(formData) {
+    const phoneNumber = "94741039941";
+    const message = `නව ඇණවුම!
         
 නම: ${formData.name}
 දුරකථන: ${formData.phone}
@@ -236,32 +216,42 @@ ${formData.email ? `විද්‍යුත් තැපෑල: ${formData.emai
 භාණ්ඩය: ${formData.product}
 මිල: ${formData.price}
 
-සටහන්: ${formData.notes || 'නොමැත'}
 කාලය: ${formData.timestamp}`;
-        
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    }
     
-    // ඊමේල් යැවීම
-    function sendEmail(formData) {
-        const templateParams = {
-            to_email: "mgrnavindudilhan@gmail.com",
-            customer_name: formData.name,
-            customer_phone: formData.phone,
-            customer_address: formData.address,
-            customer_email: formData.email || 'නොමැත',
-            product_name: formData.product,
-            product_price: formData.price,
-            order_notes: formData.notes || 'නොමැත',
-            order_time: formData.timestamp
-        };
-        
-        emailjs.send('YOUR_EMAILJS_SERVICE_ID', 'YOUR_EMAILJS_TEMPLATE_ID', templateParams)
-            .then(function(response) {
-                console.log('Email sent successfully!', response);
-            }, function(error) {
-                console.log('Email failed to send:', error);
-            });
-    }
-});
+    const whatsappUrl = `https://wa.me/${+94741039941}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+// ඊමේල් යැවීම
+function sendEmail(formData) {
+    const templateParams = {
+        to_email: "mgrnavindudilhan@gmail.com",
+        customer_name: formData.name,
+        customer_phone: formData.phone,
+        customer_address: formData.address,
+        customer_email: formData.email || 'නොමැත',
+        product_name: formData.product,
+        product_price: formData.price,
+        order_time: formData.timestamp
+    };
+    
+    emailjs.send('YOUR_EMAILJS_SERVICE_ID', 'YOUR_EMAILJS_TEMPLATE_ID', templateParams)
+        .then(function(response) {
+            console.log('Email sent successfully!', response);
+        }, function(error) {
+            console.log('Email failed to send:', error);
+        });
+}
+
+// ඇලර්ට් පණිවිඩය පෙන්වන්න
+function showAlert(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert-message';
+    alertDiv.textContent = message;
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 3000);
+}
