@@ -3,150 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>මගේ වෙළඳ අඩවිය</title>
+    <title>LankaExpress - ඔබගේ අන්තර්ජාල සාප්පුව</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .buy-now-btn {
-            background-color: #ff6f61;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-        
-        .buy-now-btn:hover {
-            background-color: #e04b42;
-        }
-        
-        .order-form {
-            display: none;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            padding: 25px;
-            margin-top: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        .required-field::after {
-            content: " *";
-            color: red;
-        }
-        
-        .submit-btn {
-            background-color: #25D366;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: background 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background-color: #1da851;
-        }
-        
-        .success-message {
-            display: none;
-            color: green;
-            text-align: center;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="product-card">
-            <h2>සුන්දර භාණ්ඩයක්</h2>
-            <p>මිල: රු. 5,500.00</p>
-            <button class="buy-now-btn" id="buyNowBtn">Buy Now</button>
+    <!-- ශීර්ෂකය -->
+    <header>
+        <div class="logo-search">
+            <h1 class="logo">LankaExpress</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="භාණ්ණ සොයන්න..." id="searchInput">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-cart">
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            </div>
         </div>
+        <nav>
+            <ul>
+                <li><a href="#">මුල් පිටුව</a></li>
+                <li><a href="#">භාණ්ඩ</a></li>
+                <li><a href="#">ප්‍රවර්ග</a></li>
+                <li><a href="#">ප්‍රශංසා</a></li>
+                <li><a href="#">අපි ගැන</a></li>
+                <li><a href="#">අමතන්න</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <div class="order-form" id="orderForm">
-            <h2 style="text-align: center; margin-bottom: 25px;">ඇණවුම් පෝරමය</h2>
-            <form id="orderFormData">
+    <!-- ප්‍රධාන අන්තර්ගතය -->
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>පහසුම මිලට ගුණාත්මක භාණ්ඩ</h2>
+                <p>ලංකාව පුරා නිව්නා ගෙවීම සහ භාණ්ඩ භාරදීම</p>
+                <a href="#featured-products" class="btn">දැන් මිලදී ගන්න</a>
+            </div>
+        </section>
+
+        <section class="featured-products" id="featured-products">
+            <h2>විශේෂ භාණ්ඩ</h2>
+            <div class="products-container" id="products-container">
+                <!-- JavaScript මගින් භාණ්ඩ පූරණය කරනු ලැබේ -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ඇණවුම් පෝරමය (සැඟවුණු ලෙස ආරම්භයේ) -->
+    <div class="order-modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>ඇණවුම් පෝරමය</h2>
+            <form id="orderForm">
                 <div class="form-group">
                     <label class="required-field">නම</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="customerName" name="name" required>
                 </div>
                 
                 <div class="form-group">
                     <label class="required-field">ලිපිනය</label>
-                    <textarea id="address" name="address" rows="3" required></textarea>
+                    <textarea id="customerAddress" name="address" rows="3" required></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label class="required-field">දුරකථන අංකය</label>
-                    <input type="tel" id="phone" name="phone" required>
+                    <input type="tel" id="customerPhone" name="phone" required>
                 </div>
                 
                 <div class="form-group">
                     <label>විද්‍යුත් තැපෑල</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="customerEmail" name="email">
                 </div>
                 
-                <div class="form-group">
-                    <label>විශේෂ සටහන්</label>
-                    <textarea id="notes" name="notes" rows="2"></textarea>
-                </div>
-                
-                <input type="hidden" id="product" name="product" value="සුන්දර භාණ්ඩයක්">
-                <input type="hidden" id="price" name="price" value="රු. 5,500.00">
+                <input type="hidden" id="orderedProduct" name="product">
+                <input type="hidden" id="orderedPrice" name="price">
                 
                 <button type="submit" class="submit-btn">ඇණවුම ඉදිරිපත් කරන්න</button>
             </form>
-            
-            <div class="success-message" id="successMessage">
-                ඇණවුම සාර්ථකව ලබාගෙන ඇත! ඔබගේ WhatsApp අංකයට තහවුරු කිරීම් පණිවිඩයක් යවනු ලැබේ.
-            </div>
         </div>
     </div>
+
+    <!-- පාදකය -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>LankaExpress</h3>
+                <p>ඔබගේ විශ්වාසනීය අන්තර්ජාල සාප්පුව</p>
+            </div>
+            <div class="footer-section">
+                <h3>සබැඳි</h3>
+                <ul>
+                    <li><a href="#">මුල් පිටුව</a></li>
+                    <li><a href="#">භාණ්ඩ</a></li>
+                    <li><a href="#">ප්‍රවර්ග</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>අමතන්න</h3>
+                <p><i class="fas fa-phone"></i> 0741039941</p>
+                <p><i class="fas fa-envelope"></i> mgrnavindudilhan@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LankaExpress. සියලුම හිමිකම් ඇවිරිණි.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script src="script.js"></script>
