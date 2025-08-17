@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>පරිපාලක පුවරුව</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        #logoutBtn { 
+            background: #ff6f61; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <h1>පරිපාලක පුවරුවට සාදරයෙන් පිළිගනිමු!</h1>
+    <p>මෙහි ඔබට ඇණවුම්, භාණ්ඩ, සහ පරිශීලකයින් කළමනාකරණය කළ හැකිය.</p>
+    
+    <button id="logoutBtn">පිටවීම</button>
+
+    <script src="firebase-config.js"></script>
+    <script>
+        // පිටවීම
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        });
+    </script>
+</body>
+  </html>
