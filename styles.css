@@ -1,49 +1,303 @@
-body {
-    font-family: Arial, sans-serif;
+/* මූලික වින්‍යාස */
+:root {
+    --primary-color: #ff6f61;
+    --secondary-color: #f4f4f4;
+    --dark-color: #333;
+    --light-color: #fff;
+    --success-color: #25D366;
+}
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-header {
-    background-color: #ff6f61;
-    color: white;
-    text-align: center;
-    padding: 20px;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: #f9f9f9;
 }
 
-.products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
-}
-
-.product {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 10px;
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-}
-
-.product img {
-    width: 100%;
-    border-radius: 5px;
-}
-
-.buy-btn {
-    display: inline-block;
-    margin-top: 10px;
-    background-color: #25D366;
-    color: white;
-    padding: 10px;
+a {
     text-decoration: none;
-    border-radius: 5px;
+    color: var(--dark-color);
 }
 
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #f4f4f4;
+ul {
+    list-style: none;
 }
+
+.btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--light-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #e04b42;
+}
+
+/* ශීර්ෂකය */
+header {
+    background: var(--light-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+}
+
+.logo {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.search-bar {
+    display: flex;
+    width: 50%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 10px 15px;
+    background: var(--primary-color);
+    color: var(--light-color);
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.user-cart a {
+    margin-left: 20px;
+    font-size: 1.2rem;
+    color: var(--dark-color);
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--primary-color);
+    color: var(--light-color);
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    background: var(--secondary-color);
+    padding: 10px 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+/* Hero කොටස */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--light-color);
+    padding: 0 20px;
+}
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* භාණ්ඩ */
+.featured-products {
+    padding: 50px 5%;
+}
+
+.featured-products h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: var(--light-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.product-price {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.product-rating {
+    color: #ffc107;
+    margin-bottom: 15px;
+}
+
+.add-to-cart {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    background: var(--success-color);
+    color: var(--light-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-to-cart:hover {
+    background: #1da851;
+}
+
+/* පාදකය */
+footer {
+    background: var(--dark-color);
+    color: var(--light-color);
+    padding: 40px 5% 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.footer-section p, .footer-section a {
+    margin-bottom: 10px;
+    display: block;
+    color: #ccc;
+}
+
+.footer-section a:hover {
+    color: var(--light-color);
+}
+
+.footer-section i {
+    margin-right: 10px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* ප්‍රතිචාරශීලී වින්‍යාස */
+@media (max-width: 768px) {
+    .logo-search {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .search-bar {
+        width: 100%;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+    }
+    
+    nav ul li {
+        margin: 5px 10px;
+    }
+    
+    .hero {
+        height: 300px;
+    }
+    
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+    }
