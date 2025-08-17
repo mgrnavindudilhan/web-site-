@@ -160,7 +160,108 @@ function searchProducts() {
 function connectViaWhatsApp(productName) {
     const phoneNumber = "94741039941";
     const message = `ආයුබෝවන්, මම ${productName} මිලදී ගැනීමට අවශ්‍යයි.`;
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${+94741039941}?text=${encodeURIComponent(message)}`;
     
     window.open(whatsappUrl, '_blank');
   }
+document.addEventListener('DOMContentLoaded', function() {
+    // EmailJS ආරම්භක කිරීම (ඔබගේ User ID සමඟ)
+    emailjs.init('service_xldh81s');
+    
+    const buyNowBtn = document.getElementById('buyNowBtn');
+    const orderForm = document.getElementById('orderForm');
+    const orderFormData = document.getElementById('orderFormData');
+    const successMessage = document.getElementById('successMessage');
+    
+    // Buy Now බොත්තම ක්ලික් කළ විට
+    buyNowBtn.addEventListener('click', function() {
+        orderForm.style.display = 'block';
+        window.scrollTo({
+            top: orderForm.offsetTop - 50,
+            behavior: 'smooth'
+        });
+    });
+    
+    // පෝරමය ඉදිරිපත් කළ විට
+    orderFormData.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // පෝරම දත්ත ලබා ගැනීම
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            notes: document.getElementById('notes').value.trim(),
+            product: document.getElementById('product').value,
+            price: document.getElementById('price').value,
+            timestamp: new Date().toLocaleString('si-LK')
+        };
+        
+        // දත්ත වලංගු කිරීම
+        if (!formData.name || !formData.address || !formData.phone) {
+            alert("කරුණාකර අනිවාර්ය ක්ෂේත්‍ර පුරවන්න!");
+            return;
+        }
+        
+        // WhatsApp පණිවිඩය යැවීම
+        sendWhatsAppMessage(formData);
+        
+        // ඊමේල් යැවීම
+        sendEmail(formData);
+        
+        // සාර්ථක පණිවිඩය පෙන්වන්න
+        orderFormData.style.display = 'none';
+        successMessage.style.display = 'block';
+        
+        // පෝරමය යළි පිහිටුවීම
+        setTimeout(() => {
+            orderFormData.reset();
+            orderForm.style.display = 'none';
+            successMessage.style.display = 'none';
+            orderFormData.style.display = 'block';
+        }, 3000);
+    });
+    
+    // WhatsApp පණිවිඩය යැවීම
+    function sendWhatsAppMessage(formData) {
+        const phoneNumber = "94741039941"; // ඔබගේ WhatsApp අංකය
+        const message = `නව ඇණවුම!
+        
+නම: ${formData.name}
+දුරකථන: ${formData.phone}
+ලිපිනය: ${formData.address}
+${formData.email ? `විද්‍යුත් තැපෑල: ${formData.email}` : ''}
+
+භාණ්ඩය: ${formData.product}
+මිල: ${formData.price}
+
+සටහන්: ${formData.notes || 'නොමැත'}
+කාලය: ${formData.timestamp}`;
+        
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+    
+    // ඊමේල් යැවීම
+    function sendEmail(formData) {
+        const templateParams = {
+            to_email: "mgrnavindudilhan@gmail.com",
+            customer_name: formData.name,
+            customer_phone: formData.phone,
+            customer_address: formData.address,
+            customer_email: formData.email || 'නොමැත',
+            product_name: formData.product,
+            product_price: formData.price,
+            order_notes: formData.notes || 'නොමැත',
+            order_time: formData.timestamp
+        };
+        
+        emailjs.send('YOUR_EMAILJS_SERVICE_ID', 'YOUR_EMAILJS_TEMPLATE_ID', templateParams)
+            .then(function(response) {
+                console.log('Email sent successfully!', response);
+            }, function(error) {
+                console.log('Email failed to send:', error);
+            });
+    }
+});
