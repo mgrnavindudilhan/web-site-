@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             rating: 5,
             sold: 95,
             description: "Durable laptop backpack with USB charging port and anti-theft design."
-            }}
+            }
     ];
 
     // Cart functionality
