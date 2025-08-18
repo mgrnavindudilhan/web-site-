@@ -1,4 +1,4 @@
-/* මූලික වින්‍යාස */
+/* Basic Styles */
 :root {
     --primary-color: #ff6f61;
     --secondary-color: #f4f4f4;
@@ -6,6 +6,7 @@
     --light-color: #fff;
     --success-color: #25D366;
     --modal-bg: rgba(0,0,0,0.7);
+    --whatsapp-color: #25D366;
 }
 
 * {
@@ -45,7 +46,7 @@ ul {
     background: #e04b42;
 }
 
-/* ශීර්ෂකය */
+/* Header */
 header {
     background: var(--light-color);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -107,27 +108,47 @@ header {
     font-size: 0.8rem;
 }
 
-nav ul {
+/* Navigation */
+nav {
+    position: relative;
+}
+
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+    padding: 15px;
+    margin-left: 15px;
+}
+
+.hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--dark-color);
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+.nav-links {
     display: flex;
     justify-content: center;
     background: var(--secondary-color);
     padding: 10px 0;
 }
 
-nav ul li {
+.nav-links li {
     margin: 0 15px;
 }
 
-nav ul li a {
+.nav-links li a {
     font-weight: 500;
     transition: color 0.3s;
 }
 
-nav ul li a:hover {
+.nav-links li a:hover {
     color: var(--primary-color);
 }
 
-/* Hero කොටස */
+/* Hero Section */
 .hero {
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
     background-size: cover;
@@ -151,7 +172,7 @@ nav ul li a:hover {
     margin-bottom: 20px;
 }
 
-/* භාණ්ඩ */
+/* Products Section */
 .featured-products {
     padding: 50px 5%;
 }
@@ -175,6 +196,7 @@ nav ul li a:hover {
     overflow: hidden;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .product-card:hover {
@@ -252,7 +274,242 @@ nav ul li a:hover {
     background: #1da851;
 }
 
-/* ඇණවුම් මොඩල් */
+/* Cart Page Styles */
+.cart-main {
+    padding: 50px 5%;
+    min-height: 60vh;
+}
+
+.cart-main h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+.cart-container {
+    margin-bottom: 30px;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.cart-empty i {
+    font-size: 3rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.cart-empty p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.cart-item {
+    display: flex;
+    background: var(--light-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.cart-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.quantity-input {
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.remove-item {
+    color: #ff6f61;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.cart-summary {
+    background: var(--light-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.summary-details {
+    margin-bottom: 20px;
+}
+
+.summary-details h3 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.summary-row.total {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: var(--light-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.checkout-btn:hover {
+    background: #e04b42;
+}
+
+/* About Page Styles */
+.about-main {
+    padding: 50px 5%;
+    min-height: 60vh;
+}
+
+.about-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+.about-content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.features-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.feature-card {
+    background: var(--light-color);
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Order Modal */
 .order-modal {
     display: none;
     position: fixed;
@@ -333,7 +590,32 @@ nav ul li a:hover {
     background-color: #1da851;
 }
 
-/* පාදකය */
+/* WhatsApp Float Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--whatsapp-color);
+    color: var(--light-color);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+}
+
+/* Footer */
 footer {
     background: var(--dark-color);
     color: var(--light-color);
@@ -374,7 +656,7 @@ footer {
     font-size: 0.9rem;
 }
 
-/* ප්‍රතිචාරශීලී වින්‍යාස */
+/* Responsive Styles */
 @media (max-width: 768px) {
     .logo-search {
         flex-direction: column;
@@ -385,12 +667,29 @@ footer {
         width: 100%;
     }
     
-    nav ul {
-        flex-wrap: wrap;
+    .hamburger-menu {
+        display: block;
     }
     
-    nav ul li {
-        margin: 5px 10px;
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--secondary-color);
+        flex-direction: column;
+        padding: 15px 0;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links li {
+        margin: 10px 0;
+        text-align: center;
     }
     
     .hero {
@@ -403,5 +702,46 @@ footer {
     
     .products-container {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .about-content {
+        flex-direction: column;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+    }
+    
+    .cart-item-image {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .cart-item-actions {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .featured-products h2, .cart-main h2, .about-section h2, .features-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        bottom: 20px;
+        right: 20px;
     }
 }
