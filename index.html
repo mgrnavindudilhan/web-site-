@@ -3,114 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LankaExpress - Home</title>
+    <title>LankaExpress - Online Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Header Styles */
-        header {
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            color: #ff6f61;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-        
-        .user-auth {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        .user-auth a {
-            color: #333;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .user-auth a:hover {
-            color: #ff6f61;
-        }
-        
-        #userName {
-            font-weight: bold;
-            color: #ff6f61;
-            margin-right: 10px;
-        }
-        
-        /* Main Content Styles */
-        .welcome-message {
-            text-align: center;
-            padding: 50px 20px;
-        }
-        
-        .auth-required {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
+    <!-- ශීර්ෂකය -->
     <header>
-        <div class="logo">LankaExpress</div>
-        <div class="user-auth">
-            <a href="login.html" id="loginLink">Login</a>
-            <a href="register.html" id="registerLink">Register</a>
-            <span id="userName" style="display:none;"></span>
-            <a href="#" id="logoutLink" style="display:none;">Logout</a>
-            <a href="profile.html" id="profileLink" style="display:none;">
-                <i class="fas fa-user-circle"></i>
-            </a>
+        <div class="logo-search">
+            <h1 class="logo">LankaExpress</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search products..." id="searchInput">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-cart">
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+            </div>
         </div>
+        <nav>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
+    <!-- ප්‍රධාන අන්තර්ගතය -->
     <main>
-        <div class="welcome-message">
-            <h1>Welcome to LankaExpress</h1>
-            <p>Your premier online shopping destination in Sri Lanka</p>
-        </div>
-        
-        <div id="authContent" class="auth-required">
-            <h2>Please login to view products</h2>
-            <a href="login.html" class="auth-btn">Login Now</a>
-        </div>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Quality Products at Affordable Prices</h2>
+                <p>Islandwide delivery with cash on delivery option</p>
+                <a href="#featured-products" class="btn">Shop Now</a>
+            </div>
+        </section>
+
+        <section class="featured-products" id="featured-products">
+            <h2>Featured Products</h2>
+            <div class="products-container" id="products-container">
+                <!-- Products loaded by JavaScript -->
+            </div>
+        </section>
     </main>
 
-    <script type="module">
-        import { initAuthUI, getCurrentUser } from './auth.js';
-        
-        // Initialize auth UI
-        initAuthUI({
-            loginLink: document.getElementById('loginLink'),
-            registerLink: document.getElementById('registerLink'),
-            logoutLink: document.getElementById('logoutLink'),
-            userName: document.getElementById('userName'),
-            profileLink: document.getElementById('profileLink')
-        });
-        
-        // Check auth state for content
-        const authContent = document.getElementById('authContent');
-        const currentUser = getCurrentUser();
-        
-        if (currentUser) {
-            authContent.innerHTML = `
-                <h2>Welcome back, ${currentUser.displayName || 'User'}!</h2>
-                <div class="product-grid">
-                    <!-- Products would be loaded here -->
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/94741039941" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Order Form Modal -->
+    <div class="order-modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Order Information</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label class="required-field">Full Name</label>
+                    <input type="text" id="customerName" name="name" required>
                 </div>
-            `;
-        }
-    </script>
+                
+                <div class="form-group">
+                    <label class="required-field">Delivery Address</label>
+                    <textarea id="customerAddress" name="address" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="required-field">Phone Number</label>
+                    <input type="tel" id="customerPhone" name="phone" required>
+                </div>
+                
+                <input type="hidden" id="orderedItems" name="items">
+                <input type="hidden" id="orderedTotal" name="total">
+                
+                <button type="submit" class="submit-btn">Place Order via WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>LankaExpress</h3>
+                <p>Your trusted online shopping destination</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> 0741039941</p>
+                <p><i class="fas fa-envelope"></i> mgrnavindudilhan@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LankaExpress. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
