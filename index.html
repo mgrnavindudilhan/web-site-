@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LankaExpress - ONLINE STORE</title>
+    <title>LankaExpress - Online Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- ශීර්ෂකය -->
     <header>
         <div class="logo-search">
             <h1 class="logo">LankaExpress</h1>
@@ -31,14 +31,13 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#">Products</a></li>
                 <li><a href="#">Categories</a></li>
-                <li><a href="#">Reviews</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- ප්‍රධාන අන්තර්ගතය -->
     <main>
         <section class="hero">
             <div class="hero-content">
@@ -51,7 +50,7 @@
         <section class="featured-products" id="featured-products">
             <h2>Featured Products</h2>
             <div class="products-container" id="products-container">
-                <!-- Products will be loaded by JavaScript -->
+                <!-- Products loaded by JavaScript -->
             </div>
         </section>
     </main>
@@ -60,6 +59,35 @@
     <a href="https://wa.me/94741039941" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- Order Form Modal -->
+    <div class="order-modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Order Information</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label class="required-field">Full Name</label>
+                    <input type="text" id="customerName" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="required-field">Delivery Address</label>
+                    <textarea id="customerAddress" name="address" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="required-field">Phone Number</label>
+                    <input type="tel" id="customerPhone" name="phone" required>
+                </div>
+                
+                <input type="hidden" id="orderedItems" name="items">
+                <input type="hidden" id="orderedTotal" name="total">
+                
+                <button type="submit" class="submit-btn">Place Order via WhatsApp</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -88,7 +116,6 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script src="script.js"></script>
-</body>
+    </body>
 </html>
