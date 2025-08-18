@@ -6,6 +6,72 @@
     <title>Register - LankaExpress</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .auth-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #ff6f61;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .auth-btn:hover {
+            background: #e04b42;
+        }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+        .auth-footer a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+        .error-message {
+            color: #e04b42;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="auth-container">
@@ -21,10 +87,11 @@
                     <input type="email" id="registerEmail" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="registerPassword" required>
+                    <label>Password (min 6 characters)</label>
+                    <input type="password" id="registerPassword" minlength="6" required>
                 </div>
-                <button type="submit" class="auth-btn">Register</button>
+                <div id="registerError" class="error-message"></div>
+                <button type="submit" class="auth-btn" id="registerBtn">Register</button>
             </form>
             <div class="auth-footer">
                 Already have an account? <a href="login.html">Login here</a>
@@ -32,6 +99,55 @@
         </div>
     </div>
 
-    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            updateProfile 
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzl3oLWOzR9O0GI4mZk3kuuyZZZFS87wA",
+            authDomain: "big-lanka.firebaseapp.com",
+            projectId: "big-lanka",
+            storageBucket: "big-lanka.appspot.com",
+            messagingSenderId: "762029695088",
+            appId: "1:762029695088:web:aba5cb07ba4e6b800c94b5",
+            measurementId: "G-JBT2MC7ZPF"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const registerBtn = document.getElementById('registerBtn');
+            const errorElement = document.getElementById('registerError');
+
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'Registering...';
+            errorElement.style.display = 'none';
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, {
+                    displayName: name
+                });
+                
+                // Redirect to login page after successful registration
+                window.location.href = 'login.html?registered=true';
+            } catch (error) {
+                errorElement.textContent = error.message;
+                errorElement.style.display = 'block';
+                registerBtn.disabled = false;
+                registerBtn.textContent = 'Register';
+            }
+        });
+    </script>
 </body>
-              </html>
+</html>
