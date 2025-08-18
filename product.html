@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - LankaExpress</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #ff6f61;
+            --secondary-color: #f4f4f4;
+            --dark-color: #333;
+            --light-color: #fff;
+            --success-color: #25D366;
+            --error-color: #e04b42;
+        }
+        
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .user-auth {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .user-auth a {
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .user-auth a:hover {
+            color: var(--primary-color);
+        }
+        
+        #userName {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        /* Main Content Styles */
+        .products-container {
+            padding: 40px 5%;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+            color: var(--dark-color);
+        }
+        
+        .product-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #e04b42;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: var(--dark-color);
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Auth Required Message */
+        .auth-required {
+            background: var(--secondary-color);
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-container {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">LankaExpress</a>
+        
+        <div class="nav-container">
+            <nav>
+                <a href="products.html" class="active">Products</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            
+            <div class="user-auth">
+                <span id="userName" style="display:none;"></span>
+                <a href="login.html" id="loginLink">Login</a>
+                <a href="register.html" id="registerLink">Register</a>
+                <a href="profile.html" id="profileLink" style="display:none;">
+                    <i class="fas fa-user-circle"></i> <span class="text">Profile</span>
+                </a>
+                <a href="#" id="logoutLink" style="display:none;">
+                    <i class="fas fa-sign-out-alt"></i> <span class="text">Logout</span>
+                </a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="products-container">
+        <h1 class="page-title">Our Products</h1>
+        <div id="productsContent">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading products...
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>LankaExpress</h3>
+                <p>Your trusted online shopping destination</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> 0741039941</p>
+                <p><i class="fas fa-envelope"></i> info@lankaexpress.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 LankaExpress. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged,
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            getDocs,
+            doc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzl3oLWOzR9O0GI4mZk3kuuyZZZFS87wA",
+            authDomain: "big-lanka.firebaseapp.com",
+            projectId: "big-lanka",
+            storageBucket: "big-lanka.appspot.com",
+            messagingSenderId: "762029695088",
+            appId: "1:762029695088:web:aba5cb07ba4e6b800c94b5",
+            measurementId: "G-JBT2MC7ZPF"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const productsContent = document.getElementById('productsContent');
+        const loginLink = document.getElementById('loginLink');
+        const registerLink = document.getElementById('registerLink');
+        const logoutLink = document.getElementById('logoutLink');
+        const profileLink = document.getElementById('profileLink');
+        const userName = document.getElementById('userName');
+        const cartCount = document.querySelector('.cart-count');
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Initialize cart count
+        updateCartCount();
+
+        // Auth State Listener
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is logged in
+                loginLink.style.display = 'none';
+                registerLink.style.display = 'none';
+                logoutLink.style.display = 'inline';
+                profileLink.style.display = 'inline';
+                userName.style.display = 'inline';
+                userName.textContent = user.displayName || user.email.split('@')[0];
+                
+                // Load products
+                await loadProducts();
+            } else {
+                // User is not logged in
+                loginLink.style.display = 'inline';
+                registerLink.style.display = 'inline';
+                logoutLink.style.display = 'none';
+                profileLink.style.display = 'none';
+                userName.style.display = 'none';
+                
+                productsContent.innerHTML = `
+                    <div class="auth-required">
+                        <h2>Please login to view products</h2>
+                        <a href="login.html" class="btn btn-primary">Login Now</a>
+                    </div>
+                `;
+            }
+        });
+
+        // Logout functionality
+        if (logoutLink) {
+            logoutLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                try {
+                    await signOut(auth);
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error("Logout error:", error);
+                    alert('Error signing out: ' + error.message);
+                }
+            });
+        }
+
+        // Load products from Firestore
+        async function loadProducts() {
+            try {
+                productsContent.innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading products...
+                    </div>
+                `;
+                
+                const querySnapshot = await getDocs(collection(db, "products"));
+                
+                if (querySnapshot.empty) {
+                    productsContent.innerHTML = `
+                        <div class="auth-required">
+                            <p>No products available at the moment.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let productsHTML = '';
+                
+                // Process each product
+                for (const docSnapshot of querySnapshot.docs) {
+                    const product = docSnapshot.data();
+                    const productId = docSnapshot.id;
+                    
+                    // Get additional details if needed
+                    // const productDetails = await getDoc(doc(db, "productDetails", productId));
+                    
+                    productsHTML += `
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="${product.imageUrl || 'https://via.placeholder.com/300'}" alt="${product.name}">
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${product.name}</h3>
+                                <div class="product-price">Rs. ${product.price?.toFixed(2) || '0.00'}</div>
+                                <p>${product.description || ''}</p>
+                                <div class="product-actions">
+                                    <button class="btn btn-primary add-to-cart" data-id="${productId}">
+                                        <i class="fas fa-cart-plus"></i> Add to Cart
+                                    </button>
+                                    <a href="product-detail.html?id=${productId}" class="btn btn-secondary">
+                                        <i class="fas fa-info-circle"></i> Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                productsContent.innerHTML = `
+                    <div class="products-grid">
+                        ${productsHTML}
+                    </div>
+                `;
+                
+                // Add event listeners to cart buttons
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        addToCart(productId);
+                    });
+                });
+                
+            } catch (error) {
+                console.error("Error loading products:", error);
+                productsContent.innerHTML = `
+                    <div class="auth-required">
+                        <h2>Error loading products</h2>
+                        <p>${error.message}</p>
+                        <button onclick="window.location.reload()" class="btn btn-primary">
+                            <i class="fas fa-sync-alt"></i> Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Add to cart function
+        function addToCart(productId) {
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    quantity: 1,
+                    addedAt: new Date().toISOString()
+                });
+            }
+            
+            updateCartCount();
+            
+            // Show success message
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'var(--success-color)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '5px';
+            notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.innerHTML = '<i class="fas fa-check-circle"></i> Product added to cart!';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+    </script>
+</body>
+  </html>
